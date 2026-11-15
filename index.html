@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ярослав Беспалов — Портфолио</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: #0f1115;
+    color: #e8eaed;
+    line-height: 1.65;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- HEADER / NAV ---------- */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15, 17, 21, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #1e222a;
+  }
+  nav {
+    max-width: 1100px; margin: 0 auto; padding: 14px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .logo { font-weight: 700; color: #4fc3f7; font-size: 18px; letter-spacing: .5px; }
+  nav ul { display: flex; gap: 22px; list-style: none; flex-wrap: wrap; }
+  nav a { color: #cfd3d8; text-decoration: none; font-size: 15px; transition: color .2s; }
+  nav a:hover { color: #4fc3f7; }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 70px 0; }
+  h1 { font-size: 42px; line-height: 1.15; margin-bottom: 16px; }
+  h2 { font-size: 28px; margin-bottom: 24px; color: #4fc3f7; }
+  .accent { color: #4fc3f7; }
+  p { color: #b8bdc5; font-size: 16px; max-width: 720px; }
+
+  /* ---------- HERO ---------- */
+  #home { min-height: 55vh; display: flex; flex-direction: column; justify-content: center; }
+  .btn {
+    display: inline-block; margin-top: 26px; padding: 12px 26px;
+    background: #4fc3f7; color: #0f1115; text-decoration: none;
+    border-radius: 10px; font-weight: 600; transition: transform .15s, box-shadow .2s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(79,195,247,.35); }
+
+  /* ---------- ABOUT (Фото больше не обрезается) ---------- */
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
+  .about img {
+    width: 100%; 
+    height: auto; /* Показывает фото целиком */
+    border-radius: 16px; 
+    border: 1px solid #1e222a;
+    display: block;
+  }
+
+  /* ---------- GALLERY (Портфолио) ---------- */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .gallery img {
+    width: 100%; 
+    height: 220px; 
+    object-fit: cover; 
+    object-position: top; /* Показывает верхнюю часть скринов, а не середину */
+    border-radius: 12px; 
+    border: 1px solid #1e222a;
+    cursor: pointer; /* Курсор в виде руки */
+    transition: transform .25s, border-color .25s, box-shadow .25s;
+  }
+  .gallery img:hover { 
+    transform: translateY(-4px); 
+    border-color: #4fc3f7; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+
+  /* ---------- LIGHTBOX (Полноэкранный просмотр) ---------- */
+  #lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+    padding: 20px;
+  }
+  #lightbox.active { display: flex; }
+  #lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    object-fit: contain;
+  }
+
+  /* ---------- FORM ---------- */
+  form { display: flex; flex-direction: column; gap: 14px; max-width: 520px; margin-top: 10px; }
+  input, textarea {
+    padding: 13px 15px; border-radius: 10px;
+    border: 1px solid #2a2f38; background: #171a21; color: #e8eaed;
+    font-family: inherit; font-size: 15px; transition: border-color .2s;
+  }
+  input:focus, textarea:focus { outline: none; border-color: #4fc3f7; }
+  textarea { resize: vertical; min-height: 110px; }
+  button {
+    padding: 13px; border: none; border-radius: 10px;
+    background: #4fc3f7; color: #0f1115; font-weight: 600;
+    font-size: 15px; cursor: pointer; transition: opacity .2s;
+  }
+  button:hover { opacity: .88; }
+  #form-msg { font-size: 14px; min-height: 20px; }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    border-top: 1px solid #1e222a; padding: 32px 0;
+    background: #0b0d11;
+  }
+  .foot-inner {
+    max-width: 1100px; margin: 0 auto; padding: 0 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 18px;
+  }
+  footer p { font-size: 14px; color: #8a9099; }
+  footer a { color: #cfd3d8; text-decoration: none; transition: color .2s; }
+  footer a:hover { color: #4fc3f7; }
+  .contacts { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; }
+  .socials { display: flex; gap: 14px; }
+  .socials a { display: inline-flex; }
+  .socials svg { width: 24px; height: 24px; fill: #8a9099; transition: fill .2s; }
+  .socials a:hover svg { fill: #4fc3f7; }
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width: 720px) {
+    h1 { font-size: 30px; }
+    h2 { font-size: 22px; }
+    section { padding: 50px 0; }
+    .about { grid-template-columns: 1fr; }
+    nav ul { gap: 14px; }
+    nav a { font-size: 14px; }
+    .foot-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Блок для полноэкранного просмотра картинок -->
+<div id="lightbox">
+  <img id="lightbox-img" src="" alt="Просмотр">
+</div>
+
+<!-- ================= HEADER / NAV ================= -->
+<header>
+  <nav>
+    <div class="logo">YAROSLAV.DEV</div>
+    <ul>
+      <li><a href="#home">Главная</a></li>
+      <li><a href="#about">Обо мне</a></li>
+      <li><a href="#portfolio">Портфолио</a></li>
+      <li><a href="#contacts">Контакты</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="home" class="wrap">
+  <h1>Привет, я <span class="accent">Ярослав Беспалов</span><br>веб-разработчик</h1>
+  <p>Создаю быстрые и адаптивные сайты, лендинги и интерфейсы. Люблю чистый код,
+     аккуратную вёрстку и проекты, которые реально работают. Открыт к
+     сотрудничеству и интересным задачам.</p>
+  <a href="#contacts" class="btn">Связаться со мной</a>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="wrap">
+  <h2>Обо мне</h2>
+  <div class="about">
+    <!-- ВАЖНО: Файл должен называться photo.jpg -->
+    <img src="photo.jpg" alt="Моё фото">
+    <div>
+      <p>Меня зовут Ярослав. Я занимаюсь веб-разработкой и вёрсткой более двух лет.
+         За это время я сделал несколько десятков учебных и коммерческих проектов:
+         от простых сайтов-визиток до интерактивных лендингов.</p>
+      <p style="margin-top:14px;">В работе использую HTML, CSS, JavaScript, а также
+         современные инструменты для адаптивной вёрстки. Стараюсь делать сайты,
+         которые удобно смотреть и на большом мониторе, и на телефоне.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section id="portfolio" class="wrap">
+  <h2>Портфолио</h2>
+  <div class="gallery">
+    <!-- ВАЖНО: Файлы должны называться work1.png, work2.png и т.д. -->
+    <img src="work1.png" alt="Проект 1">
+    <img src="work2.png" alt="Проект 2">
+    <img src="work3.png" alt="Проект 3">
+    <img src="work4.png" alt="Проект 4">
+    <img src="work5.png" alt="Проект 5">
+  </div>
+</section>
+
+<!-- ================= CONTACTS ================= -->
+<section id="contacts" class="wrap">
+  <h2>Контакты</h2>
+  <p>Оставьте сообщение — я отвечу в течение дня.</p>
+
+  <form id="contact-form" novalidate>
+    <input type="text" id="name" placeholder="Ваше имя" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <textarea id="message" placeholder="Сообщение" required></textarea>
+    <button type="submit">Отправить</button>
+    <div id="form-msg"></div>
+  </form>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="foot-inner">
+    <div>
+      <p>© 2026 Ярослав Беспалов. Все права защищены.</p>
+      <div class="contacts" style="margin-top:8px;">
+        <a href="tel:+79996669966">+7 (999) 666-99-66</a>
+        <a href="mailto:blublublu@mail.ru">blublublu@mail.ru</a>
+      </div>
+    </div>
+    <div class="socials">
+      <!-- Telegram -->
+      <a href="https://t.me/durov" target="_blank" rel="noopener" aria-label="Telegram">
+        <svg viewBox="0 0 24 24"><path d="M9.04 15.47l-.38 5.36c.54 0 .78-.23 1.06-.51l2.55-2.44 5.29 3.87c.97.53 1.66.25 1.92-.9l3.48-16.26c.31-1.42-.51-1.98-1.45-1.63L1.6 9.74c-1.39.54-1.37 1.31-.24 1.66l4.86 1.52 11.29-7.11c.53-.35 1.02-.16.62.19L9.04 15.47z"/></svg>
+      </a>
+      <!-- GitHub -->
+      <a href="https://github.com/akien-mga" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 016 0C17.4 4.7 18.4 5 18.4 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0012 .3z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= JS: Валидация формы и Лайтбокс ================= -->
+<script>
+  // Валидация формы
+  document.getElementById('contact-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const msg     = document.getElementById('form-msg');
+
+    if (!name || !message) {
+      msg.style.color = '#ff6b6b';
+      msg.textContent = 'Заполните все поля.';
+      return;
+    }
+    if (!email.includes('@')) {
+      msg.style.color = '#ff6b6b';
+      msg.textContent = 'Email должен содержать символ @';
+      return;
+    }
+    msg.style.color = '#4fc3f7';
+    msg.textContent = 'Спасибо! Сообщение отправлено.';
+    this.reset();
+  });
+
+  // Логика полноэкранного просмотра картинок (Лайтбокс)
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const galleryImages = document.querySelectorAll('.gallery img');
+
+  // При клике на любую картинку из галереи
+  galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src; // Берем ссылку на картинку
+      lightbox.classList.add('active'); // Показываем темный фон
+    });
+  });
+
+  // При клике на темный фон или саму картинку - закрываем
+  lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+  });
+</script>
+</body>
+</html>
